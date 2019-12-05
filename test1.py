@@ -1,5 +1,4 @@
 #SN比を求める
-#mean_2019-11-25-2019-12-01
 
 import numpy as np
 import librosa
