@@ -19,10 +19,13 @@ for wav_path in wav_list:
         x, sr = librosa.load(wav_path, sr = 16000)
         f0, sp, ap = pyworld.wav2world(x.astype(np.float64), sr)
         arr_sp = np.array(sp)
+        
+        #２次元の配列を１次元にする
         sum_list = []
         for i in range(len(arr_sp)):
             sum_list.append(sum(arr_sp[i]))
         
+        #f0によってspを分類
         voiced_list = []
         noise_list = []
         for i in range(len(f0)):
@@ -31,9 +34,11 @@ for wav_path in wav_list:
             else:
                 voiced_list.append(sum_list[i])
         
+        #それぞれの中央値を求める
         Nm = np.median(noise_list)
         Sm = np.median(voiced_list)
         
+        #計算
         sn_ratio = 10 * np.log10(Sm / Nm)
         SN_list.append(sn_ratio)
     except ValueError:
